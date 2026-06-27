@@ -1,0 +1,77 @@
+[package]
+name = "my-object-store"
+version = "0.1.0"
+edition = "2021"
+description = "A from-scratch S3-compatible object storage server"
+license = "Apache-2.0"
+authors = ["My Own Implementation"]
+
+[[bin]]
+name = "my-object-store"
+path = "src/main.rs"
+
+[lib]
+name = "my_object_store"
+path = "src/lib.rs"
+
+[dependencies]
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+
+# HTTP server
+axum = { version = "0.7", features = ["multipart"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["trace", "cors"] }
+hyper = { version = "1", features = ["full"] }
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+
+# XML (S3-compatible responses)
+quick-xml = { version = "0.31", features = ["serialize"] }
+
+# Crypto (AWS Signature V4)
+hmac = "0.12"
+sha2 = "0.10"
+hex = "0.4"
+md-5 = "0.10"
+base64 = "0.22"
+
+# Metadata storage
+sled = "0.34"
+
+# Error handling
+thiserror = "1"
+anyhow = "1"
+
+# Logging / tracing
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+
+# Utilities
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+bytes = "1"
+rand = "0.8"
+futures = "0.3"
+async-trait = "0.1"
+url = "2"
+mime = "0.3"
+http = "1"
+
+# Config
+config = "0.14"
+reqwest = { version = "0.12", features = ["json"] }
+
+[dev-dependencies]
+axum-test = "14"
+tokio-test = "0.4"
+tempfile = "3"
+
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
